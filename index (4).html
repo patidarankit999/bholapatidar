@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Independence Day 2025</title>
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(180deg,#FF9933 33.33%,#FFF 33.33% 66.66%,#138808 66.66%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:bgfade 6s infinite alternate;
+  padding-bottom:60px;
+}
+@keyframes bgfade {0%{filter:brightness(1);}100%{filter:brightness(1.12);}}
+body::before {
+  content:"";
+  position:fixed; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:220px; height:220px;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ashoka_Chakra.svg/1200px-Ashoka_Chakra.svg.png') no-repeat center/contain;
+  opacity:0.08; z-index:0;
+}
+h1 { color:#FF6600; font-size:2.5em; margin:20px 0 8px; text-align:center; }
+h2 { color:#138808; margin-bottom:10px; text-align:center; }
+#countdown {
+  font-size:1.5em;
+  font-weight:bold;
+  color:#d9534f;
+  background:rgba(255,255,255,0.85);
+  padding:6px 18px;
+  border-radius:20px;
+  margin-bottom:20px;
+  z-index:2;
+  text-align:center;
+}
+#nameButtons {
+  display:flex; flex-wrap:wrap;
+  gap:15px; justify-content:center;
+  z-index:2; margin-bottom:20px;
+}
+.name-btn {
+  background:linear-gradient(45deg,#d9534f,#ff6384);
+  color:#fff; border:none;
+  border-radius:25px; padding:8px 16px;
+  font-size:1em; cursor:pointer;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.name-btn:hover {
+  box-shadow:0 0 12px #ff6384;
+  transform:scale(1.08);
+}
+#overlay {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.6); z-index:1000;
+  justify-content:center; align-items:center;
+}
+.modal {
+  background:linear-gradient(135deg,#fffbe6,#ffe6e6);
+  border-radius:15px; max-width:650px; width:90%;
+  padding:20px; box-shadow:0 0 20px rgba(0,0,0,0.5);
+  animation:doorOpen 0.6s ease forwards;
+  position:relative; text-align:center;
+}
+@keyframes doorOpen {
+  0% { transform:scaleX(0); opacity:0; }
+  100% { transform:scaleX(1); opacity:1; }
+}
+.image-row {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:15px;
+}
+.image-row img {
+  max-width:48%;
+  border-radius:10px;
+  box-shadow:0 0 8px rgba(0,0,0,0.3);
+  cursor:pointer;
+}
+.modal h3 { color:#d9534f; font-size:1.5em; margin-bottom:10px; }
+.modal p {
+  color:#333;
+  line-height:1.6;
+  white-space:pre-line;
+  background:rgba(255,255,255,0.7);
+  padding:10px; border-radius:8px;
+}
+.close-btn {
+  position:absolute; top:10px; right:15px;
+  font-size:22px; background:#dc3545; color:white;
+  border:none; border-radius:50%;
+  width:28px; height:28px; cursor:pointer;
+}
+.close-btn:hover { background:#a71d2a; }
+footer {
+  margin-top:auto; padding-top:10px;
+  border-top:1px solid rgba(0,0,0,0.15);
+  text-align:center; font-size:0.9em;
+  color:#333; z-index:2;
+}
+/* Fullscreen viewer */
+#imgViewer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.92);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2000;
+}
+#imgViewer img {
+  max-width: 90%;
+  max-height: 75%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000;
+}
+#fullCaption {
+  color: white;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.2em;
+}
+/* Tiranga Buttons bottom right */
+.img-share-bottom {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  gap: 15px;
+}
+.fancy-btn {
+  background: linear-gradient(135deg, #FF9933, #ffffff, #138808);
+  border: none;
+  color: #000;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(255,153,51,0.6),
+              0 0 6px rgba(19,136,8,0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.fancy-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 10px rgba(255,255,255,0.8),
+              0 0 15px rgba(255,153,51,0.8),
+              0 0 15px rgba(19,136,8,0.8);
+}
+</style>
+</head>
+<body>
+
+<h1>Happy Independence Day</h1>
+<h2>15 August 2025</h2>
+<div id="countdown"></div>
+<div id="nameButtons"></div>
+
+<!-- Modal -->
+<div id="overlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <div class="image-row" id="modalImages"></div>
+    <h3 id="modalName"></h3>
+    <p id="modalDetails"></p>
+  </div>
+</div>
+
+<!-- Fullscreen Viewer -->
+<div id="imgViewer" onclick="backgroundClickClose(event)">
+  <!-- Removed Top Download Button -->
+  <img id="fullImage" src="" alt="">
+  <p id="fullCaption"></p>
+  <div class="img-share-bottom">
+    <button class="fancy-btn" onclick="downloadImage(event)">📥</button>
+    <button class="fancy-btn" onclick="shareImage(event)">📤</button>
+  </div>
+</div>
+
+<footer>
+  <p>India has celebrated its Independence <strong>78 times</strong> as of 2025.</p>
+  <p>© 2025 web developer Ankit Patidar contact @the_bhola_patidar. </p>
+</footer>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="JanaGanaMana.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const fighters = [
+  { name:"सरदार वल्लभभाई पटेल", image1:"sardar.jpg", details:`जन्म: 31 अक्टूबर 1875, नडियाद, गुजरात।\nभारत के पहले उप प्रधानमंत्री और गृह मंत्री।\nभारत के 560 से अधिक रियासतों को एकीकृत करने वाले 'लौह पुरुष'।\nखेड़ा सत्याग्रह और बारडोली सत्याग्रह के नेता।\nभारत के एकीकरण में महत्वपूर्ण भूमिका निभाई।` },
+  { name:"महात्मा गांधी", image1:"Mahatma.jpg", details:`जन्म: 2 अक्टूबर 1869, पोरबंदर, गुजरात।\nभारत के स्वतंत्रता संग्राम के प्रमुख नेता और अहिंसा के प्रतिपादक।\nसत्याग्रह और असहयोग आंदोलन के प्रणेता।\nनमक सत्याग्रह और भारत छोड़ो आंदोलन के नेतृत्वकर्ता।\n'राष्ट्रपिता' के रूप में विख्यात।` },
+  { name:"चंद्रशेखर आज़ाद", image1:"Chandrashekhar.jpg", details:`जन्म: 23 जुलाई 1906, मध्य प्रदेश।\nप्रमुख क्रांतिकारी, हिंदुस्तान सोशलिस्ट रिपब्लिकन एसोसिएशन के नेता।\nब्रिटिश शासन के खिलाफ हथियारबंद संघर्ष किया।\nइलाहाबाद के अल्फ्रेड पार्क में वीरगति प्राप्त की।\n'आज़ाद' नाम से प्रसिद्ध।` },
+  { name:"सुभाष चंद्र बोस", image1:"Subhash.jpg", details:`जन्म: 23 जनवरी 1897, कटक, ओडिशा।\nभारतीय राष्ट्रीय कांग्रेस के अध्यक्ष एवं आज़ाद हिंद फौज के संस्थापक।\n'तुम मुझे खून दो, मैं तुम्हें आज़ादी दूंगा' का नारा दिया।\nआजादी के लिए विदेशी सहयोग हासिल किया।` }
+];
+
+fighters.forEach((f,i)=>{
+  let b=document.createElement('button');
+  b.className='name-btn';
+  b.textContent=f.name;
+  b.onclick=()=>openModal(i);
+  document.getElementById('nameButtons').appendChild(b);
+});
+
+function openModal(i){
+  const f=fighters[i];
+  const imagesHTML=[];
+  if(f.image1) imagesHTML.push(`<img src="${f.image1}" onclick="toggleImageFull('${f.image1}','${f.name}')">`);
+  if(f.image2) imagesHTML.push(`<img src="${f.image2}" onclick="toggleImageFull('${f.image2}','${f.name}')">`);
+  document.getElementById('modalImages').innerHTML=imagesHTML.join("");
+  document.getElementById('modalName').textContent=f.name;
+  document.getElementById('modalDetails').textContent=f.details;
+  document.getElementById('overlay').style.display='flex';
+  history.pushState({modal:true},"");
+}
+
+function closeModal(){
+  document.getElementById('overlay').style.display='none';
+}
+
+let isFullScreen=false;
+function toggleImageFull(src,caption){
+  if(!isFullScreen){
+    document.getElementById('fullImage').src=src;
+    document.getElementById('fullCaption').textContent=caption;
+    document.getElementById('imgViewer').style.display='flex';
+    isFullScreen=true;
+    history.pushState({full:true},"");
+  } else {
+    document.getElementById('imgViewer').style.display='none';
+    isFullScreen=false;
+  }
+}
+
+function toggleImageSize(){
+  document.getElementById('imgViewer').style.display='none';
+  isFullScreen=false;
+}
+
+function backgroundClickClose(event){
+  if(event.target.id === 'imgViewer'){
+    toggleImageSize();
+  }
+}
+
+function downloadImage(e){
+  e.stopPropagation();
+  const imgSrc = document.getElementById('fullImage').src;
+  const link = document.createElement('a');
+  link.href = imgSrc;
+  link.download = imgSrc.split('/').pop();
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function shareImage(e){
+  e.stopPropagation();
+  const imgSrc = document.getElementById('fullImage').src;
+  const caption = document.getElementById('fullCaption').textContent;
+  if (navigator.share) {
+    navigator.share({
+      title: caption,
+      text: "देखिए ये शानदार फोटो!",
+      url: imgSrc
+    }).catch(err => {});
+  } else {
+    alert("आपके ब्राउज़र में direct share सपोर्ट नहीं है।");
+  }
+}
+
+window.addEventListener('popstate',()=>{
+  if(isFullScreen){
+    toggleImageSize();
+  } else if(document.getElementById('overlay').style.display==='flex'){
+    closeModal();
+  }
+});
+
+const eventDate=new Date("Aug 15, 2025 00:00:00").getTime();
+setInterval(()=>{
+  const now=new Date().getTime();
+  const dist=eventDate-now;
+  if(dist>0){
+    const d=Math.floor(dist/(1000*60*60*24));
+    const h=Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+    const m=Math.floor((dist%(1000*60*60))/(1000*60));
+    const s=Math.floor((dist%(1000*60))/1000);
+    document.getElementById("countdown").textContent=`${d}d ${h}h ${m}m ${s}s left`;
+  } else {
+    document.getElementById("countdown").textContent="🎉 जय हिंद 🎉";
+  }
+},1000);
+
+const music=document.getElementById('bgMusic');
+music.volume=0.8;
+music.play().catch(()=>{
+  document.body.addEventListener('click',()=>music.play(),{once:true});
+});
+</script>
+</body>
+</html>
